@@ -1,0 +1,72 @@
+<div class="container mx-auto shadow bg-light">
+  <div class="row p-5">
+    <div class="col-8 mx-auto">
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit($event)">
+        <div class="form-group">
+          <label for="name">Product Name</label>
+          <input id="name" class="form-control" formControlName="name" />
+        </div>
+        <div
+          formArrayName="colors"
+          *ngFor="let item of colors.controls; let i = index"
+        >
+          <div [formGroupName]="i" class="form-group">
+            <label for="color">Product Color {{ i + 1 }}</label>
+            <input
+              id="color"
+              class="form-control"
+              formControlName="colorName"
+            />
+          </div>
+        </div>
+        <div class="btn-group">
+          <button (click)="addColorForm()" class="btn btn-info mt-3">
+           <span class="addBtn">+</span>
+          </button>
+        </div>
+        <div class="form-group">
+          <label for="size">Product Size</label>
+          <input id="size" type="number" class="form-control" formControlName="size" />
+        </div>
+        <div class="form-group">
+          <label for="weight">Product weight</label>
+          <input id="weight" type="number" class="form-control" formControlName="weight" />
+        </div>
+        <div class="form-group">
+          <label for="quantity">Product quantity</label>
+          <input
+            id="quantity"
+            class="form-control"
+            formControlName="quantity"
+            type="number"
+          />
+        </div>
+
+        <div class="form-group mt-3">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-5">
+        <div *ngIf="errors?.name" class="alert alert-danger">
+          <p *ngIf="errors?.name?.required">Product name is required</p>
+        </div>
+        <div *ngIf="errors?.color" class="alert alert-danger">
+          <p>Product color is required</p>
+        </div>
+        <div *ngIf="errors?.weight" class="alert alert-danger">
+          <p *ngIf="errors?.weight?.required">Product weight is required</p>
+          <p *ngIf="errors?.weight?.min">Weight should be mininum 0</p>
+        </div>
+        <div *ngIf="errors?.size" class="alert alert-danger">
+          <p *ngIf="errors?.size?.required">Product size is required</p>
+          <p *ngIf="errors?.size?.min">size should be mininum 0</p>
+        </div>
+        <div *ngIf="errors?.quantity" class="alert alert-danger">
+          <p *ngIf="errors?.quantity?.required">Product quantity is required</p>
+          <p *ngIf="errors?.quantity?.min">quantity should be mininum 0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
